@@ -12,7 +12,7 @@ const SplashScreen = () => {
     }, 1000);
     if (timer === 0) {
       clearInterval(interval);
-      navigation.navigate("Dashboard");
+      navigation.navigate("Login");
     }
     return () => clearInterval(interval);
   }, [timer, navigation]);
