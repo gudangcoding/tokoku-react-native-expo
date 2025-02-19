@@ -11,7 +11,6 @@ const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
   const screenOptions = {
-    headerShown: false,
     tabBarStyle: {
       height: 60,
       backgroundColor: "#fff",
@@ -30,6 +29,7 @@ const BottomNavigation = () => {
         name="Home"
         component={HomeScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" color={color} size={size} />
           ),

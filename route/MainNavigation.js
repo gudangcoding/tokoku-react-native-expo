@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 
 const MainNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName="Dashboard">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Dashboard"
         component={BottomNavigation}
