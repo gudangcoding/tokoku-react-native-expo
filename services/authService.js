@@ -1,18 +1,22 @@
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const API_URL = "http://192.168.1.12/tokoku/public/api/";
+import { useNavigation } from "@react-navigation/native";
+import {
+  getWithoutToken,
+  getWithToken,
+  postWithToken,
+  postWithoutToken,
+} from "../utils/restAPI";
 
 // Registrasi
 const register = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}register`, userData);
+    const response = await postWithoutToken(`register`, userData);
 
-    if (response.data) {
-      await AsyncStorage.setItem("user", JSON.stringify(response.data));
+    if (response) {
+      await AsyncStorage.setItem("user", JSON.stringify(response));
     }
 
-    return response.data;
+    return response;
   } catch (error) {
     throw error.response?.data || "Terjadi kesalahan saat registrasi";
   }
@@ -21,13 +25,13 @@ const register = async (userData) => {
 // Login
 const login = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}login`, userData);
-    console.log("Login response:", response.data);
-    if (response.data) {
-      await AsyncStorage.setItem("user", JSON.stringify(response.data));
+    const response = await postWithoutToken(`login`, userData);
+
+    if (response) {
+      await AsyncStorage.setItem("user", JSON.stringify(response));
     }
 
-    return response.data;
+    return response;
   } catch (error) {
     throw error.response?.data || "Terjadi kesalahan saat login";
   }
@@ -37,8 +41,32 @@ const login = async (userData) => {
 const logout = async () => {
   try {
     await AsyncStorage.removeItem("user");
+    const navigation = useNavigation();
+    navigation.navigate("Login");
   } catch (error) {
     console.error("Gagal menghapus data user:", error);
+  }
+};
+
+// Update Profil
+const updateProfile = async (userData) => {
+  try {
+    const storedUser = await AsyncStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
+    if (!user || !user.token) {
+      throw "Token tidak ditemukan, harap login ulang";
+    }
+
+    const response = await postWithToken(`users/${user.id}`, userData);
+
+    if (response) {
+      await AsyncStorage.setItem("user", JSON.stringify(response));
+    }
+
+    return response;
+  } catch (error) {
+    throw error.response?.data || "Terjadi kesalahan saat update profil";
   }
 };
 
@@ -52,13 +80,9 @@ const getProfile = async () => {
       throw "Token tidak ditemukan, harap login ulang";
     }
 
-    const response = await axios.get(`${API_URL}profil`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await getWithToken(`profil`);
 
-    return response.data;
+    return response;
   } catch (error) {
     throw error.response?.data || "Gagal mengambil profil";
   }
@@ -69,6 +93,7 @@ const authService = {
   login,
   logout,
   getProfile,
+  updateProfile,
 };
 
 export default authService;

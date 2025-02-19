@@ -59,21 +59,23 @@ const HomeScreen = () => {
         </View>
         <ScrollView
           horizontal
-          showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={true}
           style={styles.kategori}
         >
-          {["Semua", "Pria", "Wanita", "Anak-anak"].map((item) => (
-            <TouchableOpacity
-              key={item}
-              style={[
-                styles.kategoriItem,
-                selectedKategori === item && styles.kategoriItemActive,
-              ]}
-              onPress={() => setSelectedKategori(item)}
-            >
-              <Text style={styles.kategoriText}>{item}</Text>
-            </TouchableOpacity>
-          ))}
+          {["Semua", "Pria", "Wanita", "Anak-anak", "Remaja", "Bayi"].map(
+            (item) => (
+              <TouchableOpacity
+                key={item}
+                style={[
+                  styles.kategoriItem,
+                  selectedKategori === item && styles.kategoriItemActive,
+                ]}
+                onPress={() => setSelectedKategori(item)}
+              >
+                <Text style={styles.kategoriText}>{item}</Text>
+              </TouchableOpacity>
+            )
+          )}
         </ScrollView>
         <View style={styles.produk}>
           {[

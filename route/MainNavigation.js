@@ -5,6 +5,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import SplashScreen from "../screens/SplashScreen";
 import BottomNavigation from "./navigasi";
+import DetailScreen from "../screens/DetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ const MainNavigation = () => {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={DetailScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

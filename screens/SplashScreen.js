@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SplashScreen = () => {
   const navigation = useNavigation();
@@ -12,7 +13,12 @@ const SplashScreen = () => {
     }, 1000);
     if (timer === 0) {
       clearInterval(interval);
-      navigation.navigate("Login");
+      const token = AsyncStorage.getItem("token");
+      if (token) {
+        navigation.navigate("Dashboard");
+      } else {
+        navigation.navigate("Login");
+      }
     }
     return () => clearInterval(interval);
   }, [timer, navigation]);

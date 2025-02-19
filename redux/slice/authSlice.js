@@ -41,7 +41,7 @@ export const login = createAsyncThunk(
 );
 
 // Async Thunk untuk logout
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk("logout", async () => {
   await authService.logout();
 });
 

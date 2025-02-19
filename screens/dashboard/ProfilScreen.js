@@ -9,7 +9,12 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slice/authSlice"; // pastikan path ini benar
+import ButtonCustom from "../../components/Form/ButtonCustom";
+
 const ProfilScreen = () => {
+  const dispatch = useDispatch();
   const [nama, setNama] = useState("");
   const [email, setEmail] = useState("");
   const [noHp, setNoHp] = useState("");
@@ -80,6 +85,13 @@ const ProfilScreen = () => {
         <TouchableOpacity style={styles.formButton} onPress={updateProfil}>
           <Text style={styles.formButtonText}>Update</Text>
         </TouchableOpacity>
+
+        <ButtonCustom
+          title="Logout"
+          onPress={() => dispatch(logout())}
+          color="#007bff"
+          size="md"
+        />
       </View>
     </ScrollView>
   );
@@ -118,7 +130,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   formButton: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#FF69B4",
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
